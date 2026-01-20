@@ -2,8 +2,10 @@ package gestion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import excepciones.PasswordDebilCaracteres;
+import excepciones.PasswordDebilCompuestaException;
 import excepciones.PasswordDebilException;
 import excepciones.PasswordDebilLetras;
 import excepciones.PasswordDebilLongitud;
@@ -53,7 +55,7 @@ public class GestorUsuarios {
      * @throws PasswordDebilException -> Se lanza en caso de que la contraseña no
      *                                pase el REGEX
      */
-    public boolean crearUsuario(String nombre, String password) throws PasswordDebilException {
+    public boolean crearUsuario(String nombre, String password) throws PasswordDebilCompuestaException {
         // Validar contraseña
         if (validarPassword(password)) {
             usuarios.put(nombre, password);
@@ -72,28 +74,26 @@ public class GestorUsuarios {
      * @throws PasswordDebilException -> Se lanza en caso de que la contraseña no
      *                                pase el REGEX
      */
-    private boolean validarPassword(String pass) throws PasswordDebilException {
-        ArrayList<PasswordDebilException> excepciones = new ArrayList<>();
-        if (!pass.matches("[A-Za-z!@#$%&*]{8,12}")) {
+    public boolean validarPassword(String pass) throws PasswordDebilCompuestaException {
+
+        List<PasswordDebilException> excepciones = new ArrayList<>();
+
+        if (!pass.matches("[A-Za-z!@#$%&*]{8,12}"))
             excepciones.add(new PasswordDebilLongitud());
-        }
 
-        if (!pass.matches(".*[A-Za-z].*")) {
+        if (!pass.matches(".*[A-Za-z].*"))
             excepciones.add(new PasswordDebilLetras());
-        }
 
-        if (!pass.matches(".*[!@#$%&*].*")) {
+        if (!pass.matches(".*[!@#$%&*].*"))
             excepciones.add(new PasswordDebilCaracteres());
-        }
 
-        if (pass.matches(".*[0-9].*")) {
+        if (pass.matches(".*[0-9].*"))
             excepciones.add(new PasswordDebilNumeros());
-        }
 
-        if (excepciones.isEmpty())
-            return true;
-        else
-            return false;
+        if (!excepciones.isEmpty())
+            throw new PasswordDebilCompuestaException(excepciones);
 
+        return true;
     }
+
 }

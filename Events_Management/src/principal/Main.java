@@ -176,7 +176,7 @@ public class Main {
      * @throws PasswordDebilException -> Se lanza en caso de que la password no
      *                                cumpla el REGEX
      */
-    private static void crearUsuario(Scanner s, GestorUsuarios usuarioService) throws PasswordDebilException {
+    private static void crearUsuario(Scanner s, GestorUsuarios usuarioService) throws PasswordDebilCompuestaException {
         System.out.print("Nombre del nuevo usuario: ");
         String nombre = s.next();
         System.out.print("Contraseña: ");
