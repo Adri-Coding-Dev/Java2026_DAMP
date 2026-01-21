@@ -1,0 +1,7 @@
+{
+  "java.project.sourcePaths": [
+    "Make_a_Schedule/src",
+    "Events_Management/src",
+    "Events_Management/lib"
+  ]
+}

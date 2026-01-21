@@ -59,10 +59,11 @@ public class GestorEventos {
      *                                     eventos en la lista
      */
 
-    public void borrarPorNombre(String nombre) throws EventoNoEncontradoException {
+    public boolean borrarPorNombre(String nombre) throws EventoNoEncontradoException {
         if (eventos.isEmpty()) {
             throw new EventoNoEncontradoException();
         }
         eventos.removeIf(e -> e.getNombre().equalsIgnoreCase(nombre));
+        return true;
     }
 }
